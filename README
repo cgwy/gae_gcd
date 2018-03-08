@@ -1,0 +1,5 @@
+This directory contains the pairing demo for this user guide:
+# https://docs.google.com/document/d/11RPw8bmoD0Ne0tNKFYdvSu-VIXRbht4350_KSJM1vJk/edit
+
+./gae is a simpliest gae standard app that speaks ndb to datastore
+./one_platform has a simpliest code snippet that speaks Google Cloud Client datastore library to same datastore.
