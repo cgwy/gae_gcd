@@ -63,6 +63,7 @@ def build_datastore_client(use_real_credentials):
         'DATASTORE_EMULATOR_HOST']
   if use_real_credentials:
     # This requires running `gcloud auth application-default login` in advance.
+    print 'WARNING: Watch out, you are using real credential! You may accidentally pollute production data!'
     return datastore.Client()
   else:
     if not 'DATASTORE_DATASET' in os.environ:
