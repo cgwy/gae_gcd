@@ -12,6 +12,8 @@ class ListEntitiesHandler(webapp2.RequestHandler):
   def get(self):
     """Writes the number of Greeting entities in response."""
     tasks = Task.query().fetch()
+    self.response.headers['Content-Type'] = 'text/plain'
+    self.response.write('Found %d tasks.\n' % len(tasks))
     for task in tasks:
       self.response.write(task)
       self.response.write('\n')
@@ -21,6 +23,7 @@ class PutEntityHandler(webapp2.RequestHandler):
 
   def post(self):
     """Write one Greeting entity to datastore."""
+    self.response.headers['Content-Type'] = 'text/plain'
     names = self.request.get('names')
     if not names:
       self.response.write('name should not be empty!')
