@@ -18,27 +18,26 @@ DEFAULT_NAME = 'default_task'
 ENTITY_KIND = 'Task'
 
 
-def DoPut(datastore_client, names=()):
+def DoPut(datastore_client, name=None):
   """Put a list of entities with given key names.
 
   Args:
     datastore_client: An instance of datastore.Client.
-    names: A list of strings representing the name of the entity key.
+    name: A string representing the name of the entity key.
   """
-  if not names:
-    print 'no entity names found, using the default name %s' % DEFAULT_NAME
-    names = [DEFAULT_NAME]
-  for name in names:
-    # The Cloud Datastore key for the new entity
-    task_key = datastore_client.key(ENTITY_KIND, name)
+  if not name:
+    print 'no entity name found, using the default name %s' % DEFAULT_NAME
+    name = DEFAULT_NAME
+  # The Cloud Datastore key for the new entity
+  task_key = datastore_client.key(ENTITY_KIND, name)
 
-    # Prepares the new entity
-    task = datastore.Entity(key=task_key)
-    task['description'] = 'From one platform'
+  # Prepares the new entity
+  task = datastore.Entity(key=task_key)
+  task['description'] = 'From one platform'
 
-    # Saves the entity
-    datastore_client.put(task)
-  print 'Successfully put entities of names:%r' % names
+  # Saves the entity
+  datastore_client.put(task)
+  print 'Successfully put entity of name:%r' % name
 
 
 def DoList(datastore_client):
@@ -82,9 +81,9 @@ if __name__ == '__main__':
   parser.add_argument('method',
                       nargs=1,
                       help='The method to trigger. Either put or list.')
-  parser.add_argument('--names',
-                      nargs='*',
-                      help='The name of new entity keys.')
+  parser.add_argument('--name',
+                      nargs='?',
+                      help='The name of new entity key.')
   parser.add_argument(
       '--real-credentials', dest='use_real_credentials', action='store_true')
   parser.set_defaults(use_real_credentials=False)
@@ -96,4 +95,4 @@ if __name__ == '__main__':
   if method == 'list':
     DoList(client)
   else:
-    DoPut(client, options.names or [])
+    DoPut(client, options.name)
